@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kitto — Hardware Procurement for European Teams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0f0f0e;
+    --ink-2: #3a3a36;
+    --ink-3: #7a7a74;
+    --ink-4: #b8b8b0;
+    --paper: #f4f2ed;
+    --paper-2: #eae8e1;
+    --paper-3: #dddad0;
+    --accent: #1a3a2a;
+    --accent-2: #2d6648;
+    --accent-light: #e8f0eb;
+    --accent-mid: #4d9e6e;
+    --border: rgba(15,15,14,0.12);
+    --border-strong: rgba(15,15,14,0.22);
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --radius: 3px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo-mark {
+    width: 22px;
+    height: 22px;
+    background: var(--accent);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-logo-mark svg { width: 12px; height: 12px; }
+
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--accent-2); }
+
+  /* HERO */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 7rem 2rem 5rem;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--ink-3);
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    max-width: 720px;
+  }
+
+  h1 em {
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--ink-2);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: var(--paper);
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--accent-2); }
+
+  .btn-ghost {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--ink-2);
+    padding: 12px 24px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .btn-ghost:hover { border-color: var(--ink); color: var(--ink); }
+
+  /* MOCK SCREEN */
+  .screen-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .screen {
+    background: var(--ink);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+  }
+
+  .screen-bar {
+    background: #1c1c1a;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .screen-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .screen-dot:nth-child(1) { background: #ff5f57; }
+  .screen-dot:nth-child(2) { background: #febc2e; }
+  .screen-dot:nth-child(3) { background: #28c840; }
+
+  .screen-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    margin-left: 8px;
+    letter-spacing: 0.03em;
+  }
+
+  .screen-body { padding: 0; }
+
+  .screen-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .screen-header-left {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .screen-header-left strong {
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+  }
+
+  .badge {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .badge-green { background: rgba(77,158,110,0.2); color: #4d9e6e; }
+  .badge-amber { background: rgba(200,140,50,0.2); color: #c8a050; }
+  .badge-red { background: rgba(200,80,70,0.2); color: #e06060; }
+
+  .screen-table { width: 100%; border-collapse: collapse; }
+
+  .screen-table th {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    padding: 10px 20px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-weight: 400;
+  }
+
+  .screen-table td {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 11px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(255,255,255,0.7);
+    vertical-align: middle;
+  }
+
+  .screen-table tr:last-child td { border-bottom: none; }
+
+  .screen-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .part-name {
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  .price-best {
+    color: #4d9e6e;
+    font-weight: 500;
+  }
+
+  .dist-pill {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.03em;
+  }
+
+  .screen-footer {
+    padding: 12px 20px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .screen-footer-stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .screen-footer-stat strong {
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+
+  .generate-btn {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--accent-2);
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+
+  /* PROBLEM */
+  .section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--ink-3);
+  }
+
+  h2 {
+    font-size: 1.9rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+  }
+
+  h2 strong { font-weight: 500; }
+
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .pain-item {
+    padding: 2rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pain-item:nth-child(2n) { border-right: none; }
+  .pain-item:nth-last-child(-n+2) { border-bottom: none; }
+
+  @media (min-width: 720px) {
+    .pain-grid { grid-template-columns: repeat(3, 1fr); }
+    .pain-item:nth-child(2n) { border-right: 1px solid var(--border); }
+    .pain-item:nth-child(3n) { border-right: none; }
+    .pain-item:nth-last-child(-n+2) { border-bottom: 1px solid var(--border); }
+    .pain-item:nth-last-child(-n+3) { border-bottom: none; }
+  }
+
+  .pain-number {
+    font-family: var(--mono);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--accent-mid);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .pain-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .pain-desc {
+    font-size: 0.875rem;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* FLOW */
+  .flow-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    position: relative;
+  }
+
+  .flow-step {
+    padding: 0 2rem 0 0;
+    position: relative;
+  }
+
+  .flow-step:last-child { padding-right: 0; }
+
+  .flow-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-4);
+    margin-bottom: 1rem;
+  }
+
+  .flow-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    background: var(--paper-2);
+  }
+
+  .flow-icon svg { width: 18px; height: 18px; stroke: var(--accent); stroke-width: 1.5; fill: none; }
+
+  .flow-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .flow-desc {
+    font-size: 0.85rem;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  .flow-arrow {
+    position: absolute;
+    right: 0.5rem;
+    top: 52px;
+    color: var(--ink-4);
+    font-size: 1rem;
+  }
+
+  .flow-step:last-child .flow-arrow { display: none; }
+
+  /* DISTRIBUTORS */
+  .dist-grid {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .dist-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--paper);
+  }
+
+  .dist-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .dist-region {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-4);
+    letter-spacing: 0.04em;
+  }
+
+  .dist-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-mid);
+  }
+
+  /* EARLY ACCESS */
+  .access-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 2rem 7rem;
+  }
+
+  .access-box {
+    background: var(--accent);
+    border-radius: 4px;
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (max-width: 600px) {
+    .access-box {
+      grid-template-columns: 1fr;
+      padding: 2rem;
+    }
+  }
+
+  .access-title {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    color: var(--paper);
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+
+  .access-title strong { font-weight: 500; }
+
+  .access-desc {
+    font-size: 0.9rem;
+    color: rgba(244,242,237,0.6);
+    line-height: 1.65;
+    max-width: 440px;
+  }
+
+  .access-form { display: flex; flex-direction: column; gap: 10px; min-width: 260px; }
+
+  .access-input {
+    font-family: var(--mono);
+    font-size: 13px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius);
+    padding: 11px 14px;
+    color: var(--paper);
+    width: 100%;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .access-input::placeholder { color: rgba(255,255,255,0.3); }
+  .access-input:focus { border-color: rgba(255,255,255,0.4); }
+
+  .access-submit {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--accent);
+    border: none;
+    padding: 12px 20px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+    width: 100%;
+  }
+
+  .access-submit:hover { background: var(--paper-2); }
+
+  .access-note {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.03em;
+    text-align: center;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+
+  .footer-note {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-4);
+    letter-spacing: 0.03em;
+  }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 2rem; }
+    .hero { padding: 4rem 1.5rem 3rem; }
+    .section { padding: 3rem 1.5rem; }
+    .access-section { padding: 3rem 1.5rem 5rem; }
+    footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="4" height="4" fill="#f4f2ed"/>
+        <rect x="7" y="1" width="4" height="4" fill="#f4f2ed" opacity="0.5"/>
+        <rect x="1" y="7" width="4" height="4" fill="#f4f2ed" opacity="0.5"/>
+        <rect x="7" y="7" width="4" height="4" fill="#f4f2ed"/>
+      </svg>
+    </div>
+    kitto
+  </div>
+  <a href="#access"><button class="nav-cta">Request access</button></a>
+</nav>
+
+<section class="hero">
+  <p class="hero-tag">Hardware procurement · Built for Europe</p>
+  <h1>Stop doing procurement<br>in <em>browser tabs.</em></h1>
+  <p class="hero-sub">Upload your BOM. We query Farnell, RS Components, TME, and Mouser simultaneously — then generate, place, and track your purchase orders.</p>
+  <div class="hero-actions">
+    <a href="#access"><button class="btn-primary">Request early access</button></a>
+    <a href="#how-it-works"><button class="btn-ghost">See how it works</button></a>
+  </div>
+</section>
+
+<div class="screen-wrap">
+  <div class="screen">
+    <div class="screen-bar">
+      <div class="screen-dot"></div>
+      <div class="screen-dot"></div>
+      <div class="screen-dot"></div>
+      <span class="screen-title">kitto — BOM analysis · flight-controller-v4.csv · 47 line items</span>
+    </div>
+    <div class="screen-body">
+      <div class="screen-header">
+        <div class="screen-header-left">
+          Sourcing recommendations · <strong>44 matched</strong> · 3 need review
+        </div>
+        <span class="badge badge-green">Ready to order</span>
+      </div>
+      <table class="screen-table">
+        <thead>
+          <tr>
+            <th>MPN</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Best source</th>
+            <th>Unit price</th>
+            <th>Lead time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="part-name">STM32H743ZIT6</td>
+            <td>MCU ARM Cortex-M7</td>
+            <td>12</td>
+            <td><span class="dist-pill">TME</span></td>
+            <td class="price-best">€8.24</td>
+            <td>In stock</td>
+            <td><span class="badge badge-green">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">GRM188R71H104KA93D</td>
+            <td>Cap MLCC 100nF 50V X7R</td>
+            <td>200</td>
+            <td><span class="dist-pill">Farnell</span></td>
+            <td class="price-best">€0.04</td>
+            <td>In stock</td>
+            <td><span class="badge badge-green">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">ICM-42688-P</td>
+            <td>6-axis IMU SPI/I2C</td>
+            <td>12</td>
+            <td><span class="dist-pill">Mouser</span></td>
+            <td class="price-best">€4.61</td>
+            <td>3 days</td>
+            <td><span class="badge badge-green">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">SN65HVD230DR</td>
+            <td>CAN bus transceiver</td>
+            <td>24</td>
+            <td><span class="dist-pill">RS</span></td>
+            <td>€1.18</td>
+            <td>In stock</td>
+            <td><span class="badge badge-green">Confirmed</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">PESD3V3L1BSF</td>
+            <td>ESD protection diode SOD882</td>
+            <td>48</td>
+            <td><span class="dist-pill">TME</span></td>
+            <td class="price-best">€0.07</td>
+            <td>In stock</td>
+            <td><span class="badge badge-amber">Alt suggested</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">TPS62933PFBR</td>
+            <td>Buck converter 3A 17V</td>
+            <td>12</td>
+            <td><span class="dist-pill">Mouser</span></td>
+            <td>€1.44</td>
+            <td>14 days</td>
+            <td><span class="badge badge-amber">Long lead</span></td>
+          </tr>
+          <tr>
+            <td class="part-name">W25Q128JVSIQ</td>
+            <td>Flash memory 128Mb SPI</td>
+            <td>12</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td><span class="badge badge-red">No stock EU</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="screen-footer">
+        <div style="display:flex; gap: 2rem;">
+          <div class="screen-footer-stat">Total estimate <strong>€1,847.20</strong></div>
+          <div class="screen-footer-stat">Distributors <strong>4</strong></div>
+          <div class="screen-footer-stat">Orders <strong>4 POs · ready to place</strong></div>
+        </div>
+        <button class="generate-btn">Generate purchase orders →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="section-divider">
+
+<section class="section">
+  <p class="section-label">The problem</p>
+  <h2>Before every build, someone loses <strong>two days</strong> to this.</h2>
+  <div class="pain-grid">
+    <div class="pain-item">
+      <div class="pain-number">4×</div>
+      <div class="pain-title">Distributor tabs open</div>
+      <div class="pain-desc">Farnell. RS. TME. Mouser. Each one searched separately, priced separately, ordered separately.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-number">47</div>
+      <div class="pain-title">Line items, each checked by hand</div>
+      <div class="pain-desc">Stock status. Lead time. Price breaks. Alternatives when something's out. Every line, every time.</div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-number">1–2</div>
+      <div class="pain-title">Engineer-days per build cycle</div>
+      <div class="pain-desc">At the exact moment you need your engineers building product, they're doing logistics.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section" id="how-it-works">
+  <p class="section-label">How it works</p>
+  <h2>From BOM to purchase orders <strong>in minutes.</strong></h2>
+  <div class="flow-grid">
+    <div class="flow-step">
+      <div class="flow-num">01</div>
+      <div class="flow-icon">
+        <svg viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/><polyline points="7 9 12 4 17 9"/><line x1="12" y1="4" x2="12" y2="16"/></svg>
+      </div>
+      <div class="flow-title">Upload your BOM</div>
+      <div class="flow-desc">CSV from Altium, Onshape, or a spreadsheet. Any format. No template required.</div>
+      <span class="flow-arrow">→</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">02</div>
+      <div class="flow-icon">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="flow-title">All distributors, at once</div>
+      <div class="flow-desc">Every line item queried across Farnell, RS, TME, and Mouser simultaneously. Stock, price, lead time.</div>
+      <span class="flow-arrow">→</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">03</div>
+      <div class="flow-icon">
+        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <div class="flow-title">Review and approve</div>
+      <div class="flow-desc">Sourcing recommendations per line. Alternatives flagged where stock is short. You decide, not the algorithm.</div>
+      <span class="flow-arrow">→</span>
+    </div>
+    <div class="flow-step">
+      <div class="flow-num">04</div>
+      <div class="flow-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
+      </div>
+      <div class="flow-title">Orders placed and tracked</div>
+      <div class="flow-desc">Consolidated POs generated and placed per distributor via API. Delivery tracked in one dashboard — alerts when anything slips.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<section class="section">
+  <p class="section-label">European distributors</p>
+  <h2>Built around the distributors <strong>your team already uses.</strong></h2>
+  <p style="color: var(--ink-3); font-size: 0.95rem; max-width: 520px; line-height: 1.65;">Not a US tool retrofitted for Europe. Native integrations with the distributors that stock, ship, and invoice in euros — with the lead times your production schedule depends on.</p>
+  <div class="dist-grid">
+    <div class="dist-card">
+      <div class="dist-dot"></div>
+      <div>
+        <div class="dist-name">Farnell</div>
+        <div class="dist-region">EU · API + ordering</div>
+      </div>
+    </div>
+    <div class="dist-card">
+      <div class="dist-dot"></div>
+      <div>
+        <div class="dist-name">RS Components</div>
+        <div class="dist-region">EU · API + ordering</div>
+      </div>
+    </div>
+    <div class="dist-card">
+      <div class="dist-dot"></div>
+      <div>
+        <div class="dist-name">TME</div>
+        <div class="dist-region">EU · API + ordering</div>
+      </div>
+    </div>
+    <div class="dist-card">
+      <div class="dist-dot"></div>
+      <div>
+        <div class="dist-name">Mouser</div>
+        <div class="dist-region">EU warehouse · API</div>
+      </div>
+    </div>
+    <div class="dist-card">
+      <div class="dist-dot" style="background: var(--ink-4);"></div>
+      <div>
+        <div class="dist-name" style="color: var(--ink-3);">Distrelec</div>
+        <div class="dist-region">Coming soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="access-section" id="access">
+  <div class="access-box">
+    <div>
+      <div class="access-title">We're onboarding a small number of <strong>European hardware teams.</strong></div>
+      <p class="access-desc">If your team spends more than a few hours per build cycle on procurement, we'd like to talk. Early access is free. We're shaping the product around real workflows — yours included.</p>
+    </div>
+    <div class="access-form">
+      <input class="access-input" type="email" placeholder="you@company.com">
+      <input class="access-input" type="text" placeholder="Company name">
+      <button class="access-submit" onclick="this.textContent='Request sent ✓'; this.style.opacity='0.7'">Request early access</button>
+      <p class="access-note">No pitch. A 20-minute conversation about your workflow.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">kitto</div>
+  <div class="footer-note">EU-hosted · Built for hardware teams</div>
+</footer>
+
+</body>
+</html>
